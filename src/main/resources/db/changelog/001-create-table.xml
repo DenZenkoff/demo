@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001" author="test">
+        <createTable tableName="address">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="houseNumber" type="INT"/>
+            <column name="city" type="VARCHAR(100)"/>
+            <column name="country" type="VARCHAR(100)"/>
+            <column name="postCode" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002" author="test">
+        <createTable tableName="contacts">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003" author="test">
+        <createTable tableName="hotel">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)"/>
+            <column name="description" type="VARCHAR(1000)"/>
+            <column name="brand" type="VARCHAR(100)"/>
+            <column name="address_id" type="INT"/>
+            <column name="contacts_id" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004" author="test">
+        <addForeignKeyConstraint
+                baseTableName="hotel"
+                baseColumnNames="address_id"
+                referencedTableName="address"
+                referencedColumnNames="id"
+                constraintName="fk_hotel_address"/>
+
+        <addForeignKeyConstraint
+                baseTableName="hotel"
+                baseColumnNames="contacts_id"
+                referencedTableName="contacts"
+                referencedColumnNames="id"
+                constraintName="fk_hotel_contacts"/>
+    </changeSet>
+</databaseChangeLog>
